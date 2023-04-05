@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="./assets/favicon.png" />
+
+    <!-- Webpack -->
+    <script src="./dist/main.js" defer></script>
+    <link rel="stylesheet" href="./dist/main.css" />
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+
+    <!-- Google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@200&display=swap" rel="stylesheet">
+
+    <!-- D3 -->
+    <script src="https://cdn.jsdelivr.net/npm/d3@6.7.0/dist/d3.min.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+
+    <!-- <script src="https://cdn.jsdelivr.net/npm/d3-array@3.1.1/dist/d3-array.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3-scale@4.0.0/dist/d3-scale.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3-color@3.0.0/dist/d3-color.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3-scale-chromatic@3.0.0/dist/d3-scale-chromatic.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3-ease@3.0.0/dist/d3-ease.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script> -->
+
+
+    <title>Trader Radar</title>
+</head>
+
+<header>
+
+    <h1 id="title">Trader Radar</h1>
+    <p id="datetime"></p>
+
+</header>
+
+<body>
+
+    <nav>
+        <div id="ticker"></div>
+    </nav>
+
+    <nav id="filters">
+        <li>
+            <label for="index">Select Index:</label>
+            <select id="index">
+                <option value="sp500">S&P 500</option>
+                <option value="dowjones">Dow Jones</option>
+                <option value="nasdaq">NASDAQ</option>
+            </select>
+        </li>
+        <li>
+            <label for="size-by">Select Size-by:</label>
+            <select id="size-by">
+                <option value="marketCap">Market Cap</option>
+                <option value="volume">Volume</option>
+                <option value="avgVolume">Average Volume</option>
+                <option value="sharesOutstanding">Shares Outstanding</option>
+            </select>
+        </li>
+        <li>
+            <div class="legend">
+                <div class="item-3"><span class="square"></span>-3%</div>
+                <div class="item-2"><span class="square"></span>-2%</div>
+                <div class="item-1"><span class="square"></span>-1%</div>
+                <div class="item0"><span class="square"></span>0%</div>
+                <div class="item1"><span class="square"></span>+1%</div>
+                <div class="item2"><span class="square"></span>+2%</div>
+                <div class="item3"><span class="square"></span>+3%</div>
+            </div>
+        </li>
+    </nav>
+    <br>
+    <!--search bar-->
+    <form autocomplete="off">
+        <button type="submit" id="search">Search</button>
+        <input type="text" id="input" placeholder="Input a stock ticker and press search to display its data...">
+        <button type="button" id="clear-button">Clear & Return to Map</button>
+    </form>
+    <div id="search-results"></div>
+    <br>
+    <br>
+    <div id="description"></div>
+    <br>
+    <svg id='treemapcanvas'> </svg>
+
+
+</body>
+
+<footer>
+    <p>&copy; Christopher Banas - chris@christopherbanas.com</p>
+    <br>
+    <a href="https://github.com/chrisbanas"><i class="fab fa-github fa-lg"></i></a>
+    <a href="https://www.linkedin.com/in/christopher-banas/"><i class="fab fa-linkedin fa-lg"></i></a>
+    <br>
+    <br>
+    <!-- <ul id="footer-index">
+        <li id="terms-of-use">Terms of Use</li>
+        <li id="privacy-policy">Privacy Policy</li>
+        <li id="contact">Contact</li>
+    </ul> -->
+</footer>
+
+
+</html>

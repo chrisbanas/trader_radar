@@ -1,0 +1,39 @@
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    background-color: #363a46;
+    padding: 15px;
+    text-align: center;
+    font-size: 14px;
+    color: white;
+}
+
+.fa-github {
+    color: white;
+    margin-right: 5px;
+}
+
+.fa-linkedin {
+    color: #0A66C2;
+}
+
+#footer-index {
+    display: flex;
+    justify-content: center;
+}
+
+#terms-of-use{
+    margin-right: 15px;
+    text-decoration: underline;
+}
+
+#privacy-policy{
+    margin-right: 15px;
+    text-decoration: underline;
+}
+
+#contact{
+    text-decoration: underline;
+}

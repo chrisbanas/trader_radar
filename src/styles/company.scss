@@ -1,0 +1,82 @@
+.no-results {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: red;
+}
+
+a.news-title {
+    margin-bottom: 10px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+p.news-date {
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.news-item {
+    margin-bottom: 20px;
+}
+
+p.news-summary {
+    margin-top: 10px;
+}
+
+.price::before {
+    content: "Price: ";
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+.price {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-family: 'Roboto Slab', serif;
+    font-size: 18px;
+}
+
+.price-down {
+    color: #d33a3f;
+}
+
+.price-up {
+    color: #2db955;
+}
+
+
+/* style for the grid lines */
+.grid line {
+    stroke: #ddd;
+    stroke-dasharray: 3, 3;
+}
+
+/* style for the x-axis label */
+.x-axis-label {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* style for the y-axis label */
+.y-axis-label {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* style for the candlesticks */
+rect {
+    stroke-width: 1;
+}
+
+/* style for the chart title */
+.chart-title {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* style for the chart subtitle */
+.chart-subtitle {
+    font-size: 16px;
+}

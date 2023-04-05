@@ -1,0 +1,26 @@
+header {
+    display: flex;
+    justify-content: space-around;
+    background-color: white;
+    color: black;
+    min-width: 100vw;
+    padding: 10px;
+}
+
+h1#title {
+    color: black;
+    font-size: 65px;
+    font-family: 'Roboto Slab', serif;
+    margin-left: 15px;
+}
+
+header li p {
+    margin-right: 20px;
+    margin: 0;
+    padding: 0;
+}
+
+#datetime {
+    font-family: 'Roboto Slab', serif;
+    font-weight: bold;
+}

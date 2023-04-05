@@ -1,0 +1,24 @@
+#ticker {
+    width: 100vw;
+    height: 30px;
+    overflow: hidden;
+    white-space: nowrap;
+    background-color: #000000;
+}
+
+#ticker p {
+    display: inline-block;
+    margin: 8px;
+    margin-right: 2%;
+    color: white;
+    font-family: 'Roboto Slab', serif;
+    animation: scroll-left 10s linear infinite;
+}
+
+#ticker p.negative {
+    color: #d33a3f;
+}
+
+#ticker p.positive {
+    color: #2db955;
+}
