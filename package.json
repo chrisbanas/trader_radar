@@ -1,5 +1,5 @@
 {
-  "name": "stock_heat_map",
+  "name": "trader_radar",
   "version": "1.0.0",
   "description": "Stock Heat Map Data Visualization",
   "main": "index.js",
@@ -10,15 +10,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/chrisbanas/stock_heat_map.git"
+    "url": "git+https://github.com/chrisbanas/trader_radar.git"
   },
   "keywords": [],
   "author": "christopher_banas",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/chrisbanas/stock_heat_map/issues"
+    "url": "https://github.com/chrisbanas/trader_radar/issues"
   },
-  "homepage": "https://github.com/chrisbanas/stock_heat_map#readme",
+  "homepage": "https://github.com/chrisbanas/trader_radar#readme",
   "dependencies": {
     "@babel/core": "^7.21.3",
     "@babel/preset-env": "^7.20.2",
