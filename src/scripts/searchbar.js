@@ -362,7 +362,7 @@ function drawCandlestickChart(data) {
         });
 
 
-    // add chart subtitle
+    // add chart title
     svg
         .append("text")
         .attr("class", "chart-subtitle")
@@ -370,7 +370,7 @@ function drawCandlestickChart(data) {
         .attr("y", -margin.top / 2 + 25)
         .style("text-anchor", "middle")
         .style("font-size", "16px")
-        .text("30 Day Stock Prices");
+        .text("Day Stock Prices");
 
 
 }
