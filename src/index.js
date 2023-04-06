@@ -13,7 +13,10 @@ setInterval(updateTime, 1000);
 import updateTitle from "./scripts/title";
 updateTitle()
 
-import mainSearch from "./scripts/searchbar";
-document.getElementById("search").addEventListener("click", function (event) {
-    mainSearch(event);
-});
+// import mainSearch from "./scripts/searchbar";
+// document.getElementById("search").addEventListener("click", function (event) {
+//     mainSearch(event);
+// });
+
+import startSearch from "./scripts/searchbar";
+startSearch()
