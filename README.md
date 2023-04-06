@@ -7,10 +7,6 @@
 
 Trader Radar is a visual representation of how various stocks or financial instruments are performing in the market.
 
-
-
-
-
 The map displays a grid of rectangular cells, with each cell representing a particular stock or financial instrument. The cells are colored to indicate the performance of the stock or instrument, with brighter or darker colors indicating better or worse performance, respectively.
 
 Stock heat maps typically have two levels of hierarchy. The first level represents the sector-wise heatmap, where stocks are grouped based on their respective sectors. The second level represents the heatmap of individual stocks within the sector.
