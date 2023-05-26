@@ -1,6 +1,7 @@
 const apiKey = "8660568d82eaea759bb0ec8e463033d2";
 let canvas = d3.select('#treemapcanvas');
 
+
 // here is the main entry function
 export default async function mainTreemap() {
   const indexSelector = document.getElementById("index");
@@ -324,6 +325,8 @@ let drawTreeMap = (stockData, size) => {
   // this resets the text so that we can re-render the titles. This must be abover all block.append text or it will break
   canvas.selectAll("text").remove();
 
+
+
   // title feature for each sector
   canvas
     .selectAll("titles")
@@ -373,5 +376,16 @@ let drawTreeMap = (stockData, size) => {
     .attr('y', (stock) => (((stock['y1'] - stock['y0']) / 2) + ((stock['y1'] - stock['y0']) / 12.5)))
     .attr('width', (stock) => (stock['x1'] - stock['x0']) / 3)
     .attr('height', (stock) => (stock['y1'] - stock['y0']) / 3);
+
+  //Instructions title
+  canvas.append("text")
+    .attr('class', 'instructions-title')
+    .attr("x", 850)
+    .attr("y", 30)
+    .text("Hover over a tile to see detailed information and click on a tile to zoom in")
+    .attr("font-size", "16px")
+    .attr("text-anchor", "middle")
+    .style("fill", "white")
+    .style("font-family", "'Roboto Slab', serif")
 
 }
