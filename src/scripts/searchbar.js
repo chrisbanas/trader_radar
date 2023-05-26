@@ -390,8 +390,7 @@ function drawCandlestickChart(data) {
         .text("Price");
 
     // draw the candlesticks
-    svg
-        .selectAll("rect")
+    svg.selectAll("rect")
         .data(data)
         .enter()
         .append("rect")
@@ -408,6 +407,25 @@ function drawCandlestickChart(data) {
         .attr("fill", function (stock) {
             return stock.open > stock.close ? "red" : "green";
         });
+
+    // Add lines for the wicks
+    svg.selectAll("line")
+        .data(data)
+        .enter()
+        .append("line")
+        .attr("x1", function (stock) {
+            return x(stock.date) + x.bandwidth() / 2;
+        })
+        .attr("y1", function (stock) {
+            return y(stock.high);
+        })
+        .attr("x2", function (stock) {
+            return x(stock.date) + x.bandwidth() / 2;
+        })
+        .attr("y2", function (stock) {
+            return y(stock.low);
+        })
+        .attr("stroke", "black");
 
 
     // add chart title
