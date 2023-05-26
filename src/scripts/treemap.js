@@ -325,8 +325,6 @@ let drawTreeMap = (stockData, size) => {
   // this resets the text so that we can re-render the titles. This must be abover all block.append text or it will break
   canvas.selectAll("text").remove();
 
-
-
   // title feature for each sector
   canvas
     .selectAll("titles")
@@ -334,11 +332,56 @@ let drawTreeMap = (stockData, size) => {
     .enter()
     .append("text")
     .attr('class', 'title')
-    .attr("x", (sector) => (sector.x0 + 7))
+    .attr("x", (sector) => (sector.x0 + (sector.x1 - sector.x0) / 2))
     .attr("y", (sector) => (sector.y0 + 30))
     .text(function (sector) { return sector.data.name })
     .attr("font-size", "19px")
     .style("fill", "white")
+    .each(function (sector) {
+      const text = d3.select(this);
+      const bbox = text.node().getBBox();
+      const maxWidth = sector.x1 - sector.x0 - 14; // 14 is the left and right padding
+
+      // Shrink font size if the title exceeds the container's width
+      const fontSize = parseInt(text.attr("font-size"), 10);
+      if (bbox.width > maxWidth) {
+        const newFontSize = fontSize * maxWidth / bbox.width;
+        text.attr("font-size", newFontSize);
+        bbox.width = maxWidth; // Update the bounding box width accordingly
+      }
+
+      // Wrap text within the container's width
+      const words = sector.data.name.split(/\s+/).reverse();
+      let line = [];
+      let lineNumber = 0;
+      const lineHeight = 1.1; // Adjust this value for line spacing
+      const dy = parseFloat(text.attr("y"));
+      const lines = [];
+      let tspan = text.text(null).append("tspan").attr("x", sector.x0 + 7).attr("y", dy).attr("dy", `-${lineNumber * lineHeight}em`);
+      let word;
+      while (word = words.pop()) {
+        line.push(word);
+        tspan.text(line.join(" "));
+        if (tspan.node().getComputedTextLength() > bbox.width) {
+          line.pop();
+          tspan.text(line.join(" "));
+          lines.push(line);
+          line = [word];
+          tspan = text.append("tspan").attr("x", sector.x0 + 7).attr("y", dy).attr("dy", `-${++lineNumber * lineHeight}em`).text(word);
+        }
+      }
+      lines.push(line);
+
+      // Update the y attribute of the text based on the number of lines
+      const totalHeight = lineNumber * lineHeight;
+      const initialY = sector.y0 + 30;
+      const newDY = initialY - totalHeight / 2;
+      text.selectAll("tspan").attr("dy", function (_, i) {
+        return `-${(lineNumber - i) * lineHeight}em`;
+      }).attr("y", function (_, i) {
+        return newDY + (i * lineHeight);
+      });
+    });
 
   // sets the stock ticker attributes for each tile
   block.append('text')
