@@ -360,8 +360,14 @@ let drawTreeMap = (stockData, size) => {
     .attr('font-size', (stock) => `${Math.min((stock['x1'] - stock['x0']) / 10, (stock['y1'] - stock['y0']) / 10)}px`);
 
   // sets the company logo for each stock tile. Can't get around 404 because this is not a fetch.
+  // default image - currently this does not work
+  const defaultImage = "https://neighborhoodnode-seed.s3.us-west-1.amazonaws.com/blank_logo.png";
+
   block.append('image')
     .attr('xlink:href', (stock) => `https://financialmodelingprep.com/image-stock/${stock['data']['name']}.png`)
+    .on("error", function () {
+      d3.select(this).attr("xlink:href", defaultImage);
+    })
     .attr('class', 'label')
     .attr('x', (stock) => (stock['x1'] - stock['x0']) / 3)
     .attr('y', (stock) => (((stock['y1'] - stock['y0']) / 2) + ((stock['y1'] - stock['y0']) / 12.5)))
