@@ -48,7 +48,7 @@ The second function, ```getStockTreeMapRoot(stockDataArray)```, takes an array o
 
 Together, these functions are used to fetch and process stock data from the API, and then create a hierarchical data structure suitable for displaying the data in the treemap visualization.
 
-```sh
+```js
 // function to fetch stock data
 async function fetchStockData(indexValue) {
   const indexData = await fetch(`https://financialmodelingprep.com/api/v3/${indexValue}_constituent?apikey=${apiKey}`)
