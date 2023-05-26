@@ -187,7 +187,12 @@ let drawTreeMap = (stockData, size) => {
       let scale = Math.sqrt(160000 / area);
       d3.select(this).attr('data-scale', scale);
     })
+
+
     // hover over function that displays stock info
+
+
+
     .on('mouseover', function (stock) {
       detailsDiv.html(
         `<strong>${d3.select(this).attr('data-fullName')}</strong>
@@ -227,12 +232,13 @@ let drawTreeMap = (stockData, size) => {
       // This is where you can style the popup on mouseover
       detailsDiv.style('display', 'block')
         .style('padding', '10px')
-        .style('background-color', '#E2FFFF')
+        .style('background-color', 'rgba(0, 0, 0, 0.9)') // Set the background color with 90% transparency
+        .style('color', 'white')
         .style('border', '1px solid #ccc')
         .style('border-radius', '5px')
         .style("font-size", "16px")
         .style("font-family", "'Roboto Slab', serif")
-        .style("font-weight", "bold")
+
         .style('box-shadow', '0px 0px 5px rgba(0, 0, 0, 0.1)')
         .style('left', d3.select(this).attr('data-x0') + 'px')
         .style('top', d3.select(this).attr('data-y0') + 'px');
@@ -241,6 +247,7 @@ let drawTreeMap = (stockData, size) => {
       detailsDiv.style('display', 'none');
       d3.select(this).select('.hover-text').remove();
     })
+
 
     // click function that pulls a stock to the middle of the screen
     .on('click', function (stock) {
@@ -313,15 +320,6 @@ let drawTreeMap = (stockData, size) => {
         d3.select(this).classed('selected', false);
       }
     });
-
-
-
-
-
-
-
-
-
 
 
   // all g elements now have a class called tile, and color has been set to each category. These will turn into market sectors
