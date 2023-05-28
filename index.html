@@ -32,8 +32,8 @@
     <script src="https://cdn.jsdelivr.net/npm/d3-ease@3.0.0/dist/d3-ease.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script> -->
 
-
     <title>Trader Radar</title>
+    
 </head>
 
 <body>
@@ -84,7 +84,7 @@
     <form autocomplete="off">
         <button type="submit" id="search">Search</button>
         <input type="text" id="input" placeholder="Input a stock ticker and press search to display its data..."
-            minlength="1" maxlength="5" required>
+            minlength="1" maxlength="5" required title="stock tickers contain 1 to 5 characters">
         <button type="button" id="clear-button">Clear & Return to Map</button>
     </form>
     <div id="search-results"></div>
@@ -101,11 +101,6 @@
         <a href="https://www.linkedin.com/in/christopher-banas/"><i class="fab fa-linkedin fa-lg"></i></a>
         <br>
         <br>
-        <!-- <ul id="footer-index">
-            <li id="terms-of-use">Terms of Use</li>
-            <li id="privacy-policy">Privacy Policy</li>
-            <li id="contact">Contact</li>
-        </ul> -->
     </footer>
 
 </body>
