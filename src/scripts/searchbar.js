@@ -42,7 +42,8 @@ async function getStockNews(tickers) {
 
 // get historical price for chart. Timeseries is for how many days we want to return
 async function getHistoricalPrice(tickers) {
-    const apiUrl = `https://financialmodelingprep.com/api/v3/historical-price-full/${tickers}?timeseries=180&apikey=${apiKey}`;
+    const timeRange = 180;
+    const apiUrl = `https://financialmodelingprep.com/api/v3/historical-price-full/${tickers}?timeseries=${timeRange}&apikey=${apiKey}`;
     return await fetch(apiUrl)
         .then(response => response.json())
         .then(data => {
@@ -335,13 +336,17 @@ function drawCandlestickChart(data) {
         );
 
     // format the data
+    const formatDate = d3.timeFormat("%m/%d"); // Define date formatting
+
     data.forEach(function (stock) {
-        stock.date = `${new Date(stock.date).getMonth() + 1}/${new Date(stock.date).getDate()}`;
+        stock.date = formatDate(new Date(stock.date));
         stock.open = +stock.open;
         stock.high = +stock.high;
         stock.low = +stock.low;
         stock.close = +stock.close;
     });
+
+    console.log(data.slice(150, 180));  // log the first 30 entries
 
     // reverse the order of the data array so it charts oldest on x0 and newest on x1
     data.reverse();
@@ -449,7 +454,7 @@ function drawCandlestickChart(data) {
         .attr("y", -margin.top / 2 + 25)
         .style("text-anchor", "middle")
         .style("font-size", "16px")
-        .text("Day Stock Prices");
+        .text("180 Day Stock Prices");
 
 
 }
