@@ -70,6 +70,8 @@ clearButton.addEventListener('click', function () {
     document.getElementById("filters").style.display = "flex";
     document.getElementById("description").style.display = "flex";
     document.getElementById("treemapcanvas").style.display = "flex";
+    // remove the button from treemap display
+    clearButton.style.display = "none";
 });
 
 
@@ -89,10 +91,14 @@ export default async function startSearch() {
             if (searchResultsObj && searchResultsObj.length > 0) {
                 // Valid search results received
                 mainSearch(searchHit); // Perform mainSearch
+                // Display the clear button
+                clearButton.style.display = "block";
             } else {
                 // Invalid search results or ticker not found
                 alert('Invalid stock ticker or ticker not found');
                 document.getElementById("input").value = ""; // Reset the input field
+                // Hide the clear button
+                clearButton.style.display = "none";
             }
         } catch (error) {
             console.error(error);

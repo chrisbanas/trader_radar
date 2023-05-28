@@ -1,6 +1,6 @@
 const apiKey = "8660568d82eaea759bb0ec8e463033d2";
 let canvas = d3.select('#treemapcanvas');
-
+const clearButton = document.querySelector('#clear-button');
 
 // here is the main entry function
 export default async function mainTreemap() {
@@ -121,6 +121,9 @@ function drawStockTreeMap(root, defaultSizeValue) {
 
 //function to draw the treemap
 let drawTreeMap = (stockData, size) => {
+
+  // removes the clear button from the treemap page
+  clearButton.style.display = "none";
 
   // sorts the hierarchy so that the largest marketcap stocks are at the top
   let hierarchy = d3.hierarchy(stockData, (node) => {
