@@ -35,6 +35,7 @@ export default async function mainTreemap() {
     const root = getStockTreeMapRoot(stockDataArray);
     drawStockTreeMap(root, sizeValue);
   });
+
 }
 
 
@@ -180,10 +181,17 @@ let drawTreeMap = (stockData, size) => {
       d3.select(this).attr('data-previousClose', stock['data']['previousClose'].toFixed(2));
       d3.select(this).attr('data-eps', stock['data']['eps'].toFixed(2));
       d3.select(this).attr('data-pe', stock['data']['pe'].toFixed(2));
-      d3.select(this).attr('data-x0', stock['x0'] + 27); // use this to set the postion of the popup
-      d3.select(this).attr('data-y0', stock['y0'] + 20); // use this to set the postion of the popup
-      d3.select(this).attr('data-x0', stock['x1'] + 40); // use this to set the postion of the popup
-      d3.select(this).attr('data-y0', stock['y1']); // use this to set the postion of the popup
+
+      // Set the position of the popup
+      const x0 = stock['x0'] + 50;
+      const y0 = stock['y0'] + 10;
+      const x1 = stock['x1'] + 40;
+      const y1 = stock['y1'] + 100;
+
+      d3.select(this).attr('data-x0', x0);
+      d3.select(this).attr('data-y0', y0);
+      d3.select(this).attr('data-x1', x1);
+      d3.select(this).attr('data-y1', y1);
 
       // Calculate the scaling factor based on the area of the tile. This is used in the click/zoom
       let area = (stock['x1'] - stock['x0']) * (stock['y1'] - stock['y0']);
@@ -193,9 +201,6 @@ let drawTreeMap = (stockData, size) => {
 
 
     // hover over function that displays stock info
-
-
-
     .on('mouseover', function (stock) {
       detailsDiv.html(
         `<strong>${d3.select(this).attr('data-fullName')}</strong>
