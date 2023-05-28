@@ -73,17 +73,30 @@ clearButton.addEventListener('click', function () {
 
 
 export default async function startSearch() {
-
-    searchButton.addEventListener("click", function (searchHit) {
+    searchButton.addEventListener("click", async function (searchHit) {
         searchHit.preventDefault();
-        if (input.value.length <= 0 || input.value.length > 5) {
+
+        const input = document.getElementById("input").value;
+        if (input.length < 1 || input.length > 5) {
             alert('Please enter a correct stock ticker');
+            document.getElementById("input").value = ""; // Reset the input field
             return;
-        } else {
-            mainSearch(searchHit);
+        }
+
+        try {
+            const searchResultsObj = await performSearch(input);
+            if (searchResultsObj && searchResultsObj.length > 0) {
+                // Valid search results received
+                mainSearch(searchHit); // Perform mainSearch
+            } else {
+                // Invalid search results or ticker not found
+                alert('Invalid stock ticker or ticker not found');
+                document.getElementById("input").value = ""; // Reset the input field
+            }
+        } catch (error) {
+            console.error(error);
         }
     });
-
 }
 
 async function mainSearch(searchHit) {

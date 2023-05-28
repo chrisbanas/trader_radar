@@ -83,7 +83,8 @@
     <!--search bar-->
     <form autocomplete="off">
         <button type="submit" id="search">Search</button>
-        <input type="text" id="input" placeholder="Input a stock ticker and press search to display its data...">
+        <input type="text" id="input" placeholder="Input a stock ticker and press search to display its data..."
+            minlength="1" maxlength="5" required>
         <button type="button" id="clear-button">Clear & Return to Map</button>
     </form>
     <div id="search-results"></div>
