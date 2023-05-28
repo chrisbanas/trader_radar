@@ -50,3 +50,12 @@ form {
 #clear-button:hover {
     background-color: #0062cc;
 }
+
+#candle-chart {
+    width: calc(100vw - 4%);
+    height: calc(100vh - 430px);
+}
+
+.news-list {
+    display: flex;
+}

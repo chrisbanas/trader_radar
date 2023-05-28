@@ -1,6 +1,7 @@
 const apiKey = "8660568d82eaea759bb0ec8e463033d2";
 let canvas = d3.select('#treemapcanvas');
 
+
 // here is the main entry function
 export default async function mainTreemap() {
   const indexSelector = document.getElementById("index");
@@ -186,7 +187,12 @@ let drawTreeMap = (stockData, size) => {
       let scale = Math.sqrt(160000 / area);
       d3.select(this).attr('data-scale', scale);
     })
+
+
     // hover over function that displays stock info
+
+
+
     .on('mouseover', function (stock) {
       detailsDiv.html(
         `<strong>${d3.select(this).attr('data-fullName')}</strong>
@@ -226,12 +232,13 @@ let drawTreeMap = (stockData, size) => {
       // This is where you can style the popup on mouseover
       detailsDiv.style('display', 'block')
         .style('padding', '10px')
-        .style('background-color', '#E2FFFF')
+        .style('background-color', 'rgba(0, 0, 0, 0.9)') // Set the background color with 90% transparency
+        .style('color', 'white')
         .style('border', '1px solid #ccc')
         .style('border-radius', '5px')
         .style("font-size", "16px")
         .style("font-family", "'Roboto Slab', serif")
-        .style("font-weight", "bold")
+
         .style('box-shadow', '0px 0px 5px rgba(0, 0, 0, 0.1)')
         .style('left', d3.select(this).attr('data-x0') + 'px')
         .style('top', d3.select(this).attr('data-y0') + 'px');
@@ -240,10 +247,11 @@ let drawTreeMap = (stockData, size) => {
       detailsDiv.style('display', 'none');
       d3.select(this).select('.hover-text').remove();
     })
+
+
     // click function that pulls a stock to the middle of the screen
     .on('click', function (stock) {
       let originalTransform = d3.select(this).attr('data-original-transform');
-
       let scale = d3.select(this).attr('data-scale');
 
       // Move the selected block to the end of the canvas (in terms of rendering order). This puts it in the absolute front.
@@ -259,6 +267,26 @@ let drawTreeMap = (stockData, size) => {
           .duration(750)
           .style('fill', 'orange');
 
+        // Get the size of the treemap canvas
+        let canvasWidth = d3.select('#treemapcanvas').node().clientWidth;
+        let canvasHeight = d3.select('#treemapcanvas').node().clientHeight;
+
+        // Get the size of the selected tile
+        let tileWidth = d3.select(this).node().getBoundingClientRect().width;
+        let tileHeight = d3.select(this).node().getBoundingClientRect().height;
+
+        // Calculate the center coordinates of the canvas
+        let canvasCenterX = canvasWidth / 2;
+        let canvasCenterY = canvasHeight / 2;
+
+        // Calculate the center coordinates of the selected tile
+        let tileCenterX = tileWidth / 2;
+        let tileCenterY = tileHeight / 2;
+
+        // Calculate the translation needed to center the tile within the canvas
+        let translateX = canvasCenterX - tileCenterX;
+        let translateY = canvasCenterY - tileCenterY;
+
         // Scale the selected block by a factor based on the area of the tile
         d3.select(this)
           .each(function () {
@@ -268,9 +296,7 @@ let drawTreeMap = (stockData, size) => {
           })
           .transition()
           .duration(750)
-          .attr('transform', d3.zoomIdentity
-            .translate(550, 350) // (x, y) on the whole canvas or screen
-            .scale(scale));
+          .attr('transform', `translate(${translateX},${translateY}) scale(${scale})`);
 
         d3.select(this).classed('selected', true);
       }
@@ -321,7 +347,7 @@ let drawTreeMap = (stockData, size) => {
       return stock['y1'] - stock['y0'];
     });
 
-  // this resets the text so that we can re-render the titles. This must be abover all block.append text or it will break
+  // this resets the text so that we can re-render the titles. This must be above all block.append text or it will break
   canvas.selectAll("text").remove();
 
   // title feature for each sector
@@ -331,11 +357,56 @@ let drawTreeMap = (stockData, size) => {
     .enter()
     .append("text")
     .attr('class', 'title')
-    .attr("x", (sector) => (sector.x0 + 7))
+    .attr("x", (sector) => (sector.x0 + (sector.x1 - sector.x0) / 2))
     .attr("y", (sector) => (sector.y0 + 30))
     .text(function (sector) { return sector.data.name })
     .attr("font-size", "19px")
     .style("fill", "white")
+    .each(function (sector) {
+      const text = d3.select(this);
+      const bbox = text.node().getBBox();
+      const maxWidth = sector.x1 - sector.x0 - 14; // 14 is the left and right padding
+
+      // Shrink font size if the title exceeds the container's width
+      const fontSize = parseInt(text.attr("font-size"), 10);
+      if (bbox.width > maxWidth) {
+        const newFontSize = fontSize * maxWidth / bbox.width;
+        text.attr("font-size", newFontSize);
+        bbox.width = maxWidth; // Setting this to maxWidth works but it can be changed if needed
+      }
+
+      // Wrap text within the container's width
+      const words = sector.data.name.split(/\s+/).reverse();
+      let line = [];
+      let lineNumber = 0;
+      const lineHeight = 1.1; // Adjust this value for line spacing
+      const dy = parseFloat(text.attr("y"));
+      const lines = [];
+      let tspan = text.text(null).append("tspan").attr("x", sector.x0 + 7).attr("y", dy).attr("dy", `-${lineNumber * lineHeight}em`);
+      let word;
+      while (word = words.pop()) {
+        line.push(word);
+        tspan.text(line.join(" "));
+        if (tspan.node().getComputedTextLength() > bbox.width) {
+          line.pop();
+          tspan.text(line.join(" "));
+          lines.push(line);
+          line = [word];
+          tspan = text.append("tspan").attr("x", sector.x0 + 7).attr("y", dy).attr("dy", `-${++lineNumber * lineHeight}em`).text(word);
+        }
+      }
+      lines.push(line);
+
+      // Update the y attribute of the text based on the number of lines
+      const totalHeight = lineNumber * lineHeight;
+      const initialY = sector.y0 + 30;
+      const newDY = initialY - totalHeight / 2;
+      text.selectAll("tspan").attr("dy", function (_, i) {
+        return `-${(lineNumber - i) * lineHeight}em`;
+      }).attr("y", function (_, i) {
+        return newDY + (i * lineHeight);
+      });
+    });
 
   // sets the stock ticker attributes for each tile
   block.append('text')
@@ -360,12 +431,38 @@ let drawTreeMap = (stockData, size) => {
     .attr('font-size', (stock) => `${Math.min((stock['x1'] - stock['x0']) / 10, (stock['y1'] - stock['y0']) / 10)}px`);
 
   // sets the company logo for each stock tile. Can't get around 404 because this is not a fetch.
+  // default image - currently this does not work
+  const defaultImage = "https://neighborhoodnode-seed.s3.us-west-1.amazonaws.com/blank_logo.png";
+
   block.append('image')
     .attr('xlink:href', (stock) => `https://financialmodelingprep.com/image-stock/${stock['data']['name']}.png`)
+    .on("error", function () {
+      d3.select(this).attr("xlink:href", defaultImage);
+    })
     .attr('class', 'label')
     .attr('x', (stock) => (stock['x1'] - stock['x0']) / 3)
     .attr('y', (stock) => (((stock['y1'] - stock['y0']) / 2) + ((stock['y1'] - stock['y0']) / 12.5)))
     .attr('width', (stock) => (stock['x1'] - stock['x0']) / 3)
     .attr('height', (stock) => (stock['y1'] - stock['y0']) / 3);
+
+
+  // Instructions title
+
+  // Get the size of the treemap canvas
+  let canvasWidth = d3.select('#treemapcanvas').node().clientWidth;
+
+  // Calculate the center coordinates of the canvas
+  let canvasCenterX = canvasWidth / 2;
+
+  // Draw the title
+  canvas.append("text")
+    .attr('class', 'instructions-title')
+    .attr("x", canvasCenterX)
+    .attr("y", 30)
+    .text("Hover over a tile to see detailed information and click on a tile to zoom in")
+    .attr("font-size", "16px")
+    .attr("text-anchor", "middle")
+    .style("fill", "white")
+    .style("font-family", "'Roboto Slab', serif");
 
 }

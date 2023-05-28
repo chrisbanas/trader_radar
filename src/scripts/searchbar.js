@@ -42,7 +42,8 @@ async function getStockNews(tickers) {
 
 // get historical price for chart. Timeseries is for how many days we want to return
 async function getHistoricalPrice(tickers) {
-    const apiUrl = `https://financialmodelingprep.com/api/v3/historical-price-full/${tickers}?timeseries=180&apikey=${apiKey}`;
+    const timeRange = 180;
+    const apiUrl = `https://financialmodelingprep.com/api/v3/historical-price-full/${tickers}?timeseries=${timeRange}&apikey=${apiKey}`;
     return await fetch(apiUrl)
         .then(response => response.json())
         .then(data => {
@@ -73,17 +74,30 @@ clearButton.addEventListener('click', function () {
 
 
 export default async function startSearch() {
-
-    searchButton.addEventListener("click", function (searchHit) {
+    searchButton.addEventListener("click", async function (searchHit) {
         searchHit.preventDefault();
-        if (input.value.length <= 0 || input.value.length > 5) {
+
+        const input = document.getElementById("input").value;
+        if (input.length < 1 || input.length > 5) {
             alert('Please enter a correct stock ticker');
+            document.getElementById("input").value = ""; // Reset the input field
             return;
-        } else {
-            mainSearch(searchHit);
+        }
+
+        try {
+            const searchResultsObj = await performSearch(input);
+            if (searchResultsObj && searchResultsObj.length > 0) {
+                // Valid search results received
+                mainSearch(searchHit); // Perform mainSearch
+            } else {
+                // Invalid search results or ticker not found
+                alert('Invalid stock ticker or ticker not found');
+                document.getElementById("input").value = ""; // Reset the input field
+            }
+        } catch (error) {
+            console.error(error);
         }
     });
-
 }
 
 async function mainSearch(searchHit) {
@@ -322,13 +336,17 @@ function drawCandlestickChart(data) {
         );
 
     // format the data
+    const formatDate = d3.timeFormat("%m/%d"); // Define date formatting
+
     data.forEach(function (stock) {
-        stock.date = `${new Date(stock.date).getMonth() + 1}/${new Date(stock.date).getDate()}`;
+        stock.date = formatDate(new Date(stock.date));
         stock.open = +stock.open;
         stock.high = +stock.high;
         stock.low = +stock.low;
         stock.close = +stock.close;
     });
+
+    console.log(data.slice(150, 180));  // log the first 30 entries
 
     // reverse the order of the data array so it charts oldest on x0 and newest on x1
     data.reverse();
@@ -390,8 +408,7 @@ function drawCandlestickChart(data) {
         .text("Price");
 
     // draw the candlesticks
-    svg
-        .selectAll("rect")
+    svg.selectAll("rect")
         .data(data)
         .enter()
         .append("rect")
@@ -409,6 +426,25 @@ function drawCandlestickChart(data) {
             return stock.open > stock.close ? "red" : "green";
         });
 
+    // Add lines for the wicks
+    svg.selectAll("line")
+        .data(data)
+        .enter()
+        .append("line")
+        .attr("x1", function (stock) {
+            return x(stock.date) + x.bandwidth() / 2;
+        })
+        .attr("y1", function (stock) {
+            return y(stock.high);
+        })
+        .attr("x2", function (stock) {
+            return x(stock.date) + x.bandwidth() / 2;
+        })
+        .attr("y2", function (stock) {
+            return y(stock.low);
+        })
+        .attr("stroke", "black");
+
 
     // add chart title
     svg
@@ -418,7 +454,7 @@ function drawCandlestickChart(data) {
         .attr("y", -margin.top / 2 + 25)
         .style("text-anchor", "middle")
         .style("font-size", "16px")
-        .text("Day Stock Prices");
+        .text("180 Day Stock Prices");
 
 
 }
