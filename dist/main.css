@@ -34,6 +34,7 @@ footer, header, hgroup, menu, nav, section {
 
 body {
   line-height: 1;
+  overflow: hidden; /* I added this to prevent the scrollbar from showing*/
 }
 
 ol, ul {
@@ -371,12 +372,8 @@ form {
   margin-bottom: 20px;
 }
 
-.news-list {
-  display: flex;
-}
-
-.x-axis-label {
-  padding-top: 50px;
+.logo-and-name {
+  height: auto;
 }
 
 .no-results {
@@ -559,10 +556,6 @@ form {
   margin-bottom: 20px;
 }
 
-.news-list {
-  display: flex;
-}
-
-.x-axis-label {
-  padding-top: 50px;
+.logo-and-name {
+  height: auto;
 }

@@ -30,6 +30,7 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
 	line-height: 1;
+	overflow: hidden; /* I added this to prevent the scrollbar from showing*/
 }
 ol, ul {
 	list-style: none;

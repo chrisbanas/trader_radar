@@ -211,6 +211,8 @@ async function mainSearch(searchHit) {
     // adding and appending the price html elements on the page
     price.textContent = "$" + companyData[0].price;
     price.classList.add("price");
+    price.style.padding = "10px"
+    price.style.paddingBottom = "20px"
 
 
     // add the up or down class based on price change
@@ -224,19 +226,16 @@ async function mainSearch(searchHit) {
     companyDataList.appendChild(listItem);
 
 
-
-
     // add news and style
     const newsList = document.createElement("ul");
     newsList.style.fontFamily = "'Roboto Slab', serif";
     newsList.style.fontWeight = "bold"
     newsList.style.display = "flex";
     newsList.style.alignItems = "center";
-    newsList.style.justifyContent = "space-around";
+    newsList.style.justifyContent = "space-between";
     newsList.style.fontSize = "15px";
-    newsList.style.padding = "20px";
-    newsList.style.paddingRight = "30px";
-    newsList.style.paddingLeft = "30px"
+    newsList.style.paddingRight = "100px";
+    newsList.style.paddingLeft = "100px"
 
 
     // how the news list items are mapped and added to the HTML of the page
@@ -298,8 +297,10 @@ async function mainSearch(searchHit) {
 
 // draw the chart
 function drawCandlestickChart(data) {
+
     // set the dimensions and margins of the graph
     const margin = { top: 65, right: 20, bottom: 90, left: 100 };
+
     // calculate the width and height based on window size
     // subtracting margin offsets to ensure the chart fits within the window
     const width = (window.innerWidth - margin.left - margin.right) * 0.9;
@@ -318,7 +319,9 @@ function drawCandlestickChart(data) {
         .attr("id", "candle-chart") // Add the id attribute
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
-        .style("background-color", "#f5f5f5")
+        .style("background-color", "#1b1d20")
+        .style("border-radius", "10px")
+        .style("color", "white")
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -326,6 +329,7 @@ function drawCandlestickChart(data) {
     svg
         .append("g")
         .attr("class", "grid")
+        .style("color", "white")
         .call(
             d3
                 .axisLeft(y)
@@ -338,6 +342,7 @@ function drawCandlestickChart(data) {
         .append("g")
         .attr("class", "grid")
         .attr("transform", "translate(0," + height + ")")
+        .style("color", "white")
         .call(
             d3
                 .axisBottom(x)
@@ -355,8 +360,6 @@ function drawCandlestickChart(data) {
         stock.low = +stock.low;
         stock.close = +stock.close;
     });
-
-    console.log(data.slice(150, 180));  // log the first 30 entries
 
     // reverse the order of the data array so it charts oldest on x0 and newest on x1
     data.reverse();
@@ -393,7 +396,8 @@ function drawCandlestickChart(data) {
         .attr("transform", "rotate(-90)")
         .attr("x", -9)
         .attr("y", 0)
-        .style("text-anchor", "end")
+        .style("color", "white")
+        .style("text-anchor", "end");
 
     // draw the x-axis label
     svg
@@ -402,10 +406,11 @@ function drawCandlestickChart(data) {
         .attr("x", width / 2)
         .attr("y", height + margin.bottom / 2)
         .style("text-anchor", "middle")
+        .style("color", "white")
         .text("Date");
 
     // draw the y axis
-    svg.append("g").call(d3.axisLeft(y));
+    svg.append("g").call(d3.axisLeft(y)).style("color", "white");
 
     // draw the y-axis label
     svg
@@ -415,6 +420,7 @@ function drawCandlestickChart(data) {
         .attr("y", -margin.left / 2)
         .attr("transform", "rotate(-90)")
         .style("text-anchor", "middle")
+        .style("color", "white")
         .text("Price");
 
     // draw the candlesticks
@@ -453,7 +459,7 @@ function drawCandlestickChart(data) {
         .attr("y2", function (stock) {
             return y(stock.low);
         })
-        .attr("stroke", "black");
+        .attr("stroke", "white");
 
 
     // add chart title
@@ -464,6 +470,7 @@ function drawCandlestickChart(data) {
         .attr("y", -margin.top / 2 + 25)
         .style("text-anchor", "middle")
         .style("font-size", "16px")
+        .style("color", "white")
         .text("180 Day Stock Prices");
 
 
