@@ -70,6 +70,8 @@ clearButton.addEventListener('click', function () {
     document.getElementById("filters").style.display = "flex";
     document.getElementById("description").style.display = "flex";
     document.getElementById("treemapcanvas").style.display = "flex";
+    // remove the button from treemap display
+    clearButton.style.display = "none";
 });
 
 
@@ -89,10 +91,14 @@ export default async function startSearch() {
             if (searchResultsObj && searchResultsObj.length > 0) {
                 // Valid search results received
                 mainSearch(searchHit); // Perform mainSearch
+                // Display the clear button
+                clearButton.style.display = "block";
             } else {
                 // Invalid search results or ticker not found
                 alert('Invalid stock ticker or ticker not found');
                 document.getElementById("input").value = ""; // Reset the input field
+                // Hide the clear button
+                clearButton.style.display = "none";
             }
         } catch (error) {
             console.error(error);
@@ -294,8 +300,12 @@ async function mainSearch(searchHit) {
 function drawCandlestickChart(data) {
     // set the dimensions and margins of the graph
     const margin = { top: 65, right: 20, bottom: 90, left: 100 };
-    const width = 1500 - margin.left - margin.right;
-    const height = 500 - margin.top - margin.bottom;
+    // calculate the width and height based on window size
+    // subtracting margin offsets to ensure the chart fits within the window
+    const width = (window.innerWidth - margin.left - margin.right) * 0.9;
+    const height = (window.innerHeight - margin.top - margin.bottom) * 0.2;
+
+    console.log(window.innerHeight)
 
     // set the ranges
     const x = d3.scaleBand().range([0, width]).padding(0.2);
@@ -383,7 +393,7 @@ function drawCandlestickChart(data) {
         .attr("transform", "rotate(-90)")
         .attr("x", -9)
         .attr("y", 0)
-        .style("text-anchor", "end");
+        .style("text-anchor", "end")
 
     // draw the x-axis label
     svg

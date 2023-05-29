@@ -1,3 +1,23 @@
+// Check if the user is on a mobile device
+function isMobileDevice() {
+  const mobileRegex = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobi/;
+  return mobileRegex.test(navigator.userAgent);
+}
+
+// Function to show the alert
+function showMobileAlert() {
+  alert("Please use a desktop device to access this app.");
+}
+
+// Add the alert logic
+if (isMobileDevice()) {
+  showMobileAlert();
+}
+
+// -------------------------------------------------------------
+
+// Main fuctions to render the app
+
 import mainTreemap from "./scripts/treemap";
 mainTreemap()
 
