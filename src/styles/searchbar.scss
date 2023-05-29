@@ -52,10 +52,15 @@ form {
 }
 
 #candle-chart {
-    width: calc(100vw - 4%);
-    height: calc(100vh - 430px);
+    width: auto;
+    height: auto;
+    margin-bottom: 20px;
 }
 
 .news-list {
     display: flex;
+}
+
+.x-axis-label{
+    padding-top: 50px;
 }

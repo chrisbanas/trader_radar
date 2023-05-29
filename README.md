@@ -132,6 +132,8 @@ function getStockTreeMapRoot(stockDataArray) {
     - [Companiy Stats](https://site.financialmodelingprep.com/developer/docs/companies-key-stats-free-api/)
     - [Stock News](https://site.financialmodelingprep.com/developer/docs/stock-news-api/)
     - [Historical Stock Data](https://site.financialmodelingprep.com/developer/docs/historical-stock-data-free-api/#Historical-Daily-Prices)
+- **Public Holiday API**
+    - [Nager](https://date.nager.at/Api)
 - **Google Fonts**
 - **Font Awesome**
 - **JavaScript Vanilla DOM API:** A popular JavaScript library that simplifies DOM manipulation and event handling.
