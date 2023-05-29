@@ -476,7 +476,7 @@ svg {
 
 #treemapcanvas {
   width: calc(100vw - 4%);
-  height: calc(100vh - 440px);
+  height: calc(100vh - 400px);
   background-color: #1b1d20;
   border-radius: 10px;
 }

@@ -9,6 +9,11 @@ function showMobileAlert() {
   alert("Please use a desktop device to access this app.");
 }
 
+// // Redirect to www.traderradar.net if bad URL
+// if (window.location.href !== "https://www.traderradar.net") {
+//   window.location.href = "https://www.traderradar.net";
+// }
+
 // Add the alert logic
 if (isMobileDevice()) {
   showMobileAlert();

@@ -40,7 +40,7 @@ async function getStockNews(tickers) {
         });;
 }
 
-// get historical price for chart. Timeseries is for how many days we want to return
+// get historical price for candlestick chart. Timeseries is for how many days we want to return
 async function getHistoricalPrice(tickers) {
     const timeRange = 180;
     const apiUrl = `https://financialmodelingprep.com/api/v3/historical-price-full/${tickers}?timeseries=${timeRange}&apikey=${apiKey}`;
@@ -74,7 +74,7 @@ clearButton.addEventListener('click', function () {
     clearButton.style.display = "none";
 });
 
-
+// MAIN FUNCTION THAT CONTROLS THE SEARCH
 export default async function startSearch() {
     searchButton.addEventListener("click", async function (searchHit) {
         searchHit.preventDefault();
@@ -115,12 +115,9 @@ async function mainSearch(searchHit) {
     // perform search and get company data
     const companyData = await performSearch(searchQuery);
 
-
-
     // perform search and get news data
     const news = await getStockNews(searchQuery);
     const limitedNews = news.slice(0, 5);
-
 
     // fetch chart data check to see if there is already a chart if so clear then redisplay
     const chartElement = document.getElementById("candle-chart")
@@ -136,6 +133,7 @@ async function mainSearch(searchHit) {
         chartElement.remove();
     }
 
+    // Draws the candlestick chart
     drawCandlestickChart(historicalPrice.historical)
 
     // clear out other elements on page
@@ -174,7 +172,7 @@ async function mainSearch(searchHit) {
 
     // style the company name
     const name = document.createElement("a");
-    name.style.fontSize = "20px";
+    name.style.fontSize = "40px";
     name.style.fontFamily = "'Roboto Slab', serif";
     name.style.fontWeight = "bold"
     name.style.marginRight = "2px";
@@ -244,7 +242,7 @@ async function mainSearch(searchHit) {
     for (const article of limitedNews) {
         const newsItem = document.createElement("li");
         newsItem.classList.add("news-item");
-
+        newsItem.style.paddingRight = "30px"
         const title = document.createElement("a");
         title.href = article.url;
         title.textContent = article.title;
@@ -389,13 +387,13 @@ function drawCandlestickChart(data) {
                 .axisBottom(x)
                 .tickValues(
                     x.domain().filter(function (date, day) {
-                        return day % 30 === 0;
+                        return day % 15 === 0;
                     })
                 )
         )
         .selectAll("text")
         .attr("transform", "rotate(0)")
-        .attr("x", 5)
+        .attr("x", 12)
         .attr("y", 10)
         .style("color", "white")
         .style("text-anchor", "end");
