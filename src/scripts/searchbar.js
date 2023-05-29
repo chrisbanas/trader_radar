@@ -322,6 +322,7 @@ function drawCandlestickChart(data) {
         .style("background-color", "#1b1d20")
         .style("border-radius", "10px")
         .style("color", "white")
+        .style("font-family", "Roboto Slab, serif")
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -393,9 +394,9 @@ function drawCandlestickChart(data) {
                 )
         )
         .selectAll("text")
-        .attr("transform", "rotate(-90)")
-        .attr("x", -9)
-        .attr("y", 0)
+        .attr("transform", "rotate(0)")
+        .attr("x", 5)
+        .attr("y", 10)
         .style("color", "white")
         .style("text-anchor", "end");
 
@@ -404,9 +405,10 @@ function drawCandlestickChart(data) {
         .append("text")
         .attr("class", "x-axis-label")
         .attr("x", width / 2)
-        .attr("y", height + margin.bottom / 2)
+        .attr("y", height + margin.bottom / 2 + 15)
         .style("text-anchor", "middle")
-        .style("color", "white")
+        .style("font-size", "14px")
+        .style("fill", "white")
         .text("Date");
 
     // draw the y axis
@@ -420,7 +422,8 @@ function drawCandlestickChart(data) {
         .attr("y", -margin.left / 2)
         .attr("transform", "rotate(-90)")
         .style("text-anchor", "middle")
-        .style("color", "white")
+        .style("font-size", "14px")
+        .style("fill", "white")
         .text("Price");
 
     // draw the candlesticks
@@ -467,10 +470,10 @@ function drawCandlestickChart(data) {
         .append("text")
         .attr("class", "chart-subtitle")
         .attr("x", width / 2)
-        .attr("y", -margin.top / 2 + 25)
+        .attr("y", -margin.top / 2 + 10)
         .style("text-anchor", "middle")
-        .style("font-size", "16px")
-        .style("color", "white")
+        .style("font-size", "18px")
+        .style("fill", "white")
         .text("180 Day Stock Prices");
 
 
