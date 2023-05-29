@@ -1,29 +1,7 @@
-export default function updateTime() {
+export default async function updateTime() {
 
-    // A list of all stock market holidays in the format 'Month Date for next 20 yrs'
-    let marketHolidays = {
-        '2023': ['Jan 2', 'Jan 16', 'Feb 20', 'May 29', 'Jul 4', 'Sep 4', 'Nov 23', 'Dec 25'],
-        '2024': ['Jan 1', 'Jan 15', 'Feb 19', 'May 27', 'Jul 4', 'Sep 2', 'Nov 28', 'Dec 25'],
-        '2025': ['Jan 1', 'Jan 20', 'Feb 17', 'May 26', 'Jul 4', 'Sep 1', 'Nov 27', 'Dec 25'],
-        '2026': ['Jan 1', 'Jan 19', 'Feb 16', 'May 25', 'Jul 3', 'Sep 7', 'Nov 26', 'Dec 25'],
-        '2027': ['Jan 1', 'Jan 18', 'Feb 15', 'May 31', 'Jul 5', 'Sep 6', 'Nov 25', 'Dec 24'],
-        '2028': ['Jan 2', 'Jan 16', 'Feb 20', 'May 29', 'Jul 4', 'Sep 4', 'Nov 23', 'Dec 25'],
-        '2029': ['Jan 1', 'Jan 15', 'Feb 19', 'May 28', 'Jul 4', 'Sep 3', 'Nov 22', 'Dec 25'],
-        '2030': ['Jan 1', 'Jan 21', 'Feb 18', 'May 27', 'Jul 4', 'Sep 2', 'Nov 28', 'Dec 25'],
-        '2031': ['Jan 1', 'Jan 20', 'Feb 17', 'May 26', 'Jul 4', 'Sep 1', 'Nov 27', 'Dec 25'],
-        '2032': ['Jan 1', 'Jan 19', 'Feb 16', 'May 31', 'Jul 5', 'Sep 6', 'Nov 25', 'Dec 24'],
-        '2033': ['Jan 1', 'Jan 17', 'Feb 21', 'May 30', 'Jul 4', 'Sep 5', 'Nov 24', 'Dec 26'],
-        '2034': ['Jan 2', 'Jan 16', 'Feb 20', 'May 29', 'Jul 4', 'Sep 4', 'Nov 23', 'Dec 25'],
-        '2035': ['Jan 1', 'Jan 15', 'Feb 19', 'May 28', 'Jul 4', 'Sep 3', 'Nov 22', 'Dec 25'],
-        '2036': ['Jan 1', 'Jan 21', 'Feb 18', 'May 26', 'Jul 4', 'Sep 1', 'Nov 27', 'Dec 26'],
-        '2037': ['Jan 1', 'Jan 19', 'Feb 16', 'May 25', 'Jul 3', 'Sep 7', 'Nov 26', 'Dec 25'],
-        '2038': ['Jan 1', 'Jan 18', 'Feb 15', 'May 31', 'Jul 5', 'Sep 6', 'Nov 25', 'Dec 24'],
-        '2039': ['Jan 2', 'Jan 16', 'Feb 20', 'May 29', 'Jul 4', 'Sep 4', 'Nov 23', 'Dec 25'],
-        '2040': ['Jan 1', 'Jan 15', 'Feb 19', 'May 27', 'Jul 4', 'Sep 2', 'Nov 28', 'Dec 25'],
-        '2041': ['Jan 1', 'Jan 20', 'Feb 17', 'May 26', 'Jul 4', 'Sep 1', 'Nov 27', 'Dec 25'],
-        '2042': ['Jan 1', 'Jan 19', 'Feb 16', 'May 31', 'Jul 5', 'Sep 6', 'Nov 25', 'Dec 24'],
-        '2043': ['Jan 1', 'Jan 18', 'Feb 15', 'May 30', 'Jul 4', 'Sep 5', 'Nov 24', 'Dec 26']
-    };
+    // Market holidays - this is how they are formated in the response from the public api
+    let marketHolidays = ["New Year's Day", "Martin Luther King, Jr. Day", "Washington's Birthday", "Good Friday", "Memorial Day", "Juneteenth", "Independence Day", "Labor Day", "Thanksgiving Day", "Christmas Day"];
 
     // clock options
     let options = {
@@ -42,12 +20,18 @@ export default function updateTime() {
     let dateTimeString = dt.toLocaleString('en-US', options);
     dateTimeString = dateTimeString.replace(/([A-Z]+) Standard Time$/, '$1');
 
-    // Check if current day is a market holiday
-    let dtString = dt.toLocaleString('en-US', { month: 'short', day: 'numeric' });
+    // Date string and year used for api fetch and check if it is a market holiday.
+    let dtString = dt.toISOString().split('T')[0];  // Outputs "2023-04-07" format
     let year = dt.getFullYear().toString(); // get current year as string
-    let isMarketHoliday = marketHolidays[year].includes(dtString);
 
-    // Calculate time left until the market opens or closes
+    // Fetch public holidays for the current year
+    let holidaysResponse = await fetch(`https://date.nager.at/api/v3/PublicHolidays/${year}/US`);
+    let holidays = await holidaysResponse.json();
+
+    // Check if the current day is a market holiday
+    let isMarketHoliday = holidays.some(holiday => marketHolidays.includes(holiday.name) && holiday.date === dtString);
+
+    // Calculate time left until the market opens or closes. Markets use EST or NYC time
     let openTime = new Date(Date.UTC(dt.getFullYear(), dt.getMonth(), dt.getDate(), 13, 30, 0)); // Market opens at 9:30 AM EST (which is 1:30 PM UTC)
     let closeTime = new Date(Date.UTC(dt.getFullYear(), dt.getMonth(), dt.getDate(), 20, 0, 0)); // Market closes at 4:00 PM EST (which is 8:00 PM UTC)
     let timeDiff = openTime - dt;
@@ -66,8 +50,7 @@ export default function updateTime() {
         timeLeft = 'Market is closed';
     }
 
-
-    // sets the color to green on open and red on closed
+    // sets the color to green on open and red on closed. Using NYC time
     let nyTime = new Date().toLocaleString("en-US", { timeZone: "America/New_York" });
     let nyHour = new Date(nyTime).getHours();
 
