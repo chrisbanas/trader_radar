@@ -371,12 +371,13 @@ function drawCandlestickChart(data) {
     );
     y.domain([
         d3.min(data, function (stock) {
-            return stock.low;
+            return Math.min(stock.low, stock.open, stock.close);
         }),
         d3.max(data, function (stock) {
-            return stock.high;
+            return Math.max(stock.high, stock.open, stock.close);
         }),
     ]);
+
 
     // draw the custom x axis with labels for every 30 days
     svg
@@ -424,7 +425,8 @@ function drawCandlestickChart(data) {
         .style("fill", "white")
         .text("Price");
 
-    // draw the candlesticks
+
+    // draw the candlesticks with rounded corners
     svg.selectAll("rect")
         .data(data)
         .enter()
@@ -439,15 +441,18 @@ function drawCandlestickChart(data) {
         .attr("height", function (stock) {
             return y(Math.min(stock.open, stock.close)) - y(Math.max(stock.open, stock.close));
         })
+        .attr("rx", 5) // set the corner radius
+        .attr("ry", 5) // set the corner radius
         .attr("fill", function (stock) {
             return stock.open > stock.close ? "red" : "green";
         });
 
     // Add lines for the wicks
-    svg.selectAll("line")
+    svg.selectAll(".wick-line") // Use a class selector to target the desired lines
         .data(data)
         .enter()
         .append("line")
+        .attr("class", "wick-line") // Assign the same class to the appended lines
         .attr("x1", function (stock) {
             return x(stock.date) + x.bandwidth() / 2;
         })
@@ -462,7 +467,6 @@ function drawCandlestickChart(data) {
         })
         .attr("stroke", "white");
 
-
     // add chart title
     svg
         .append("text")
@@ -473,6 +477,5 @@ function drawCandlestickChart(data) {
         .style("font-size", "18px")
         .style("fill", "white")
         .text("180 Day Stock Prices");
-
 
 }
