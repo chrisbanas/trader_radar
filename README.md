@@ -10,23 +10,43 @@ Trader Radar is a visual and interactive representation of how various stocks or
 
 ---------------------
 
-## Technologies, Libraries, APIs
+# Technologies, Libraries, APIs
+
+## **Financial Data APIs**
+
+### Data from [Financial Modeling Prep](https://site.financialmodelingprep.com/developer/docs/)
+
+| **API**                     | **Feature** | **Info**                                                                                                                           |
+|-----------------------------|-------------|------------------------------------------------------------------------------------------------------------------------------------|
+| [List of S&P 500 Companies](https://site.financialmodelingprep.com/developer/docs/list-of-sp-500-companies-api/)   | Heat Map    | It returns all S&P 500 constituents.                                                                                               |
+| [List of Dow Jones Companies](https://site.financialmodelingprep.com/developer/docs/list-of-dow-companies-api/) | Heat Map    | Returns Companies in the Dow Jones, such as Honeywell and Home Depot.                                                              |
+| [List of NASDAQ Companies](https://site.financialmodelingprep.com/developer/docs/list-of-nasdaq-companies-api/)    | Heat Map    | Returns Companies in the Nasdaq 100, such as DocuSign and Zoom.                                                                    |
+| [Current Stock Data](https://site.financialmodelingprep.com/developer/docs/stock-api/)          | Heat Map    | Obtains real-time stock market quotes                                                                                              |
+| [Companiy Stats](https://site.financialmodelingprep.com/developer/docs/companies-key-stats-free-api/)              | Search      | Access data for a company such as 52 week high, 52 week low, market capitalization, and key stats to understand a company finances. |
+| [Stock News](https://site.financialmodelingprep.com/developer/docs/stock-news-api/)                 | Search      | It returns the most recent news with parameters like images or urls of the original article.                                         |
+| [Historical Stock Data](https://site.financialmodelingprep.com/developer/docs/historical-stock-data-free-api/#Historical-Daily-Prices)       | Search      | provides access to historical prices that can be used to create charts.                                                            |
+|                             |             |                                                                                                                                    |
+
+## **Charting libraries**
+
+| **Chart**         | **Library**                                          | **Info**                                                                                                                                                                                                                    |
+|-------------------|------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Treemap           | [D3](https://observablehq.com/@d3/treemap)           | A treemap chart visually represents hierarchical data using nested rectangles, where the size and color of each rectangle correspond to different data attributes.                                                          |
+| Candlestick Chart | [D3](https://observablehq.com/@d3/candlestick-chart) | A candlestick chart displays the opening, closing, high, and low prices of a financial instrument within a specified time period, using rectangular "candles" with upper and lower "wicks" to represent price fluctuations. |
+|                   |                                                      |                                                                                                                                                                                                                             |
+
+## **Time & Calendar APIs**
+
+| **API**         | **Source**                         | **Feature**  | **Use**                                                                    |
+|-----------------|------------------------------------|--------------|----------------------------------------------------------------------------|
+| Public Holidays | [Nager](https://date.nager.at/Api) | Market Clock | For displaying market closed on holidays when the stock market is not open |
+|                 |                                    |              |                                                                            |
+
 
 - **Vanilla JavaScript:** Trader Radar is a single page app.
 - **HTML 5/CSS 3:** The markup and styling languages used to create the user interface of the heat map.
-- **Charting libraries:** Used for creating the stock heat map and candle stick chart from [D3](https://d3js.org/)
-    - [D3 Treemap](https://observablehq.com/@d3/treemap)
-    - [D3 Candle Stick Chart](https://observablehq.com/@d3/candlestick-chart)
-- **Financial data APIs:** data from [Financial Modeling Prep](https://site.financialmodelingprep.com/developer/docs/)
-    - [List of S&P 500 Companies](https://site.financialmodelingprep.com/developer/docs/list-of-sp-500-companies-api/)
-    - [List of Dow Jones Companies](https://site.financialmodelingprep.com/developer/docs/list-of-nasdaq-companies-api/)
-    - [List of NASDAQ Companies](https://site.financialmodelingprep.com/developer/docs/list-of-dow-companies-api/)
-    - [Current Stock Data](https://site.financialmodelingprep.com/developer/docs/stock-api/)
-    - [Companiy Stats](https://site.financialmodelingprep.com/developer/docs/companies-key-stats-free-api/)
-    - [Stock News](https://site.financialmodelingprep.com/developer/docs/stock-news-api/)
-    - [Historical Stock Data](https://site.financialmodelingprep.com/developer/docs/historical-stock-data-free-api/#Historical-Daily-Prices)
-- **Public Holiday API**
-    - [Nager](https://date.nager.at/Api)
+
+
 - **Google Fonts**
 - **Font Awesome**
 - **JavaScript Vanilla DOM API:** A popular JavaScript library that simplifies DOM manipulation and event handling.
