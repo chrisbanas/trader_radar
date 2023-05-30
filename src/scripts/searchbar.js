@@ -304,8 +304,6 @@ function drawCandlestickChart(data) {
     const width = (window.innerWidth - margin.left - margin.right) * 0.9;
     const height = (window.innerHeight - margin.top - margin.bottom) * 0.2;
 
-    console.log(window.innerHeight)
-
     // set the ranges
     const x = d3.scaleBand().range([0, width]).padding(0.2);
     const y = d3.scaleLinear().range([height, 0]);
