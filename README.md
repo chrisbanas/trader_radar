@@ -6,7 +6,7 @@
 
 # Background
 
-Trader Radar is a visual and interactive representation of how various stocks or financial instruments are performing in the market. It combines a stock heat map, a stock search function, a candlestick chart, live market clock, and stock ticker tape to provide valuable insights and aid in decision-making.
+Trader Radar is a visual and interactive representation of how various stocks or financial instruments are performing in the market. It combines a stock heatmap, a stock search function, a candlestick chart, live market clock, and stock ticker tape to provide valuable insights and aid in decision-making.
 
 ---------------------
 
@@ -18,10 +18,10 @@ Trader Radar is a visual and interactive representation of how various stocks or
 
 | **API**                     | **Feature** | **Info**                                                                                                                           |
 |-----------------------------|-------------|------------------------------------------------------------------------------------------------------------------------------------|
-| [List of S&P 500 Companies](https://site.financialmodelingprep.com/developer/docs/list-of-sp-500-companies-api/)   | Heat Map    | It returns all S&P 500 constituents.                                                                                               |
-| [List of Dow Jones Companies](https://site.financialmodelingprep.com/developer/docs/list-of-dow-companies-api/) | Heat Map    | Returns Companies in the Dow Jones, such as Honeywell and Home Depot.                                                              |
-| [List of NASDAQ Companies](https://site.financialmodelingprep.com/developer/docs/list-of-nasdaq-companies-api/)    | Heat Map    | Returns Companies in the Nasdaq 100, such as DocuSign and Zoom.                                                                    |
-| [Current Stock Data](https://site.financialmodelingprep.com/developer/docs/stock-api/)          | Heat Map    | Obtains real-time stock market quotes                                                                                              |
+| [List of S&P 500 Companies](https://site.financialmodelingprep.com/developer/docs/list-of-sp-500-companies-api/)   | Heatmap    | It returns all S&P 500 constituents.                                                                                               |
+| [List of Dow Jones Companies](https://site.financialmodelingprep.com/developer/docs/list-of-dow-companies-api/) | Heatmap    | Returns Companies in the Dow Jones, such as Honeywell and Home Depot.                                                              |
+| [List of NASDAQ Companies](https://site.financialmodelingprep.com/developer/docs/list-of-nasdaq-companies-api/)    | Heatmap    | Returns Companies in the Nasdaq 100, such as DocuSign and Zoom.                                                                    |
+| [Current Stock Data](https://site.financialmodelingprep.com/developer/docs/stock-api/)          | Heatmap    | Obtains real-time stock market quotes                                                                                              |
 | [Companiy Stats](https://site.financialmodelingprep.com/developer/docs/companies-key-stats-free-api/)              | Search      | Access data for a company such as 52 week high, 52 week low, market capitalization, and key stats to understand a company finances. |
 | [Stock News](https://site.financialmodelingprep.com/developer/docs/stock-news-api/)                 | Search      | It returns the most recent news with parameters like images or urls of the original article.                                         |
 | [Historical Stock Data](https://site.financialmodelingprep.com/developer/docs/historical-stock-data-free-api/#Historical-Daily-Prices)       | Search      | provides access to historical prices that can be used to create charts.                                                            |
@@ -32,7 +32,7 @@ Trader Radar is a visual and interactive representation of how various stocks or
 | **Chart**         | **Library**                                          | **Info**                                                                                                                                                                                                                    |
 |-------------------|------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Treemap           | [D3](https://observablehq.com/@d3/treemap)           | A treemap chart visually represents hierarchical data using nested rectangles, where the size and color of each rectangle correspond to different data attributes.                                                          |
-| Candlestick Chart | [D3](https://observablehq.com/@d3/candlestick-chart) | A candlestick chart displays the opening, closing, high, and low prices of a financial instrument within a specified time period, using rectangular "candles" with upper and lower "wicks" to represent price fluctuations. |
+| Candlestick | [D3](https://observablehq.com/@d3/candlestick-chart) | A candlestick chart displays the opening, closing, high, and low prices of a financial instrument within a specified time period, using rectangular "candles" with upper and lower "wicks" to represent price fluctuations. |
 |                   |                                                      |                                                                                                                                                                                                                             |
 
 ## **Time & Calendar APIs**
@@ -41,21 +41,6 @@ Trader Radar is a visual and interactive representation of how various stocks or
 |-----------------|------------------------------------|--------------|----------------------------------------------------------------------------|
 | Public Holidays | [Nager](https://date.nager.at/Api) | Market Clock | For displaying market closed on holidays when the stock market is not open |
 |                 |                                    |              |                                                                            |
-
-
-- **Vanilla JavaScript:** Trader Radar is a single page app.
-- **HTML 5/CSS 3:** The markup and styling languages used to create the user interface of the heat map.
-
-
-- **Google Fonts**
-- **Font Awesome**
-- **JavaScript Vanilla DOM API:** A popular JavaScript library that simplifies DOM manipulation and event handling.
-- **Webpack and Babel:** To bundle and transpile the source JavaScript code.
-- **NPM:** to manage project dependencies.
-- **Bootstrap:** A front-end framework that provides a responsive grid system and UI components for building user interfaces.
-- **Google Domains** For custom domain management
-- **Hosting** Github Pages
-
 ---------------------
 
 # Features
@@ -63,18 +48,19 @@ Trader Radar is a visual and interactive representation of how various stocks or
 
 
 
-## Treemap
+## Stock Market Heatmap
 
-The heat map is designed using a treemap algorithm which was first introduced by [Ben Shneiderman](https://www.cs.umd.edu/hcil/treemap-history/), in the 1990s. The treemap is then generated using the [D3 Treemap](https://observablehq.com/@d3/treemap) charting library.
+The heatmap is designed using a treemap algorithm which was first introduced by [Ben Shneiderman](https://www.cs.umd.edu/hcil/treemap-history/), in the 1990s. The treemap is then generated using the [D3 Treemap](https://observablehq.com/@d3/treemap) charting library.
 
 It allows users to filter and sort the data based market index, volume, average volumne, shares outstanding, and market cap, has a click to zoom which allows a drill down into the tiniest of cells, and a tooltip upon hovering for additional stock detail.
 
-Each cell in the heat map is color-coded based on the stock's performance, with different shades of color representing different levels of performance, and the stocks grouped by industry.
+Each cell in the heatmap is color-coded based on the stock's performance, with different shades of color representing different levels of performance, and the stocks grouped by industry.
 
-![Heat Map](./assets/heatmap.JPG)
+![Heatmap](./assets/heatmap.JPG)
 
-### Treemap Data Structure
-The data for the treemap is built by combining two API calls from [Financial Modeling Prep](https://site.financialmodelingprep.com/developer/docs/) and then custom structured with a root node, then child nodes of the stock industry, then those have child nodes with each stock, and then those have child nodes with the stock information.
+### Heatmap Data Structure
+
+The data for the heatmap is built by combining two API calls from [Financial Modeling Prep](https://site.financialmodelingprep.com/developer/docs/) and then custom structured with a root node, then child nodes of the stock industry, then those have child nodes with each stock, and then those have child nodes with the stock information.
 
 ```mathematica
 Root (Stock Index Data)
@@ -111,6 +97,8 @@ The chart shows the daily low, high, open, and close of a stock. Each â€œcandleâ
 ## Stock Search
 
 ## Ticker Tape
+
+![Ticker](./assets/ticker.gif)
 
 ## Market Clock
 
