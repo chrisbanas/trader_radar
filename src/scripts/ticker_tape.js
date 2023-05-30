@@ -41,6 +41,7 @@ async function fetchStockData(indexValue) {
 async function updateStockTicker(indexValue) {
     const stocksData = await fetchStockData(indexValue);
     const ticker = document.querySelector('#ticker');
+    const tickerWidth = ticker.offsetWidth;
 
     // Clear the ticker
     ticker.innerHTML = '';
@@ -61,8 +62,17 @@ async function updateStockTicker(indexValue) {
     });
 
     // Scroll the ticker to the left
-    setInterval(() => {
-        const ticker = document.querySelector('#ticker');
-        ticker.scrollLeft += 2; // adjust scroll
-    }, 100); // adjust scroll interval
+    let scrollAmount = 0;
+    const scrollSpeed = 2; // adjust scroll speed
+    const scrollInterval = 100; // adjust scroll interval
+
+    const scrollTicker = () => {
+        ticker.scrollLeft += scrollSpeed;
+
+        if (ticker.scrollLeft >= ticker.scrollWidth - tickerWidth) {
+            ticker.scrollLeft = 0;
+        }
+    };
+
+    setInterval(scrollTicker, scrollInterval);
 }
