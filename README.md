@@ -2,11 +2,9 @@
     <a href="https://www.traderradar.net/" style="text-decoration: none; color: inherit;">Trader Radar</a>
 </h1>
 
- <!-- ![Home Page](./assets/trader_radar_home.JPG) -->
-
-# Background
-
 Trader Radar is a visual and interactive representation of how various stocks or financial instruments are performing in the market. It combines a stock heatmap, a stock search function, a candlestick chart, live market clock, and stock ticker tape to provide valuable insights and aid in decision-making.
+
+ ![Home Page](./assets/trader_radar_home.JPG)
 
 ---------------------
 
@@ -58,7 +56,7 @@ Each cell in the heatmap is color-coded based on the stock's performance, with d
 
 ![Heatmap](./assets/heatmap.JPG)
 
-### Heatmap Data Structure
+## Heatmap Data Structure
 
 The data for the heatmap is built by combining two API calls from [Financial Modeling Prep](https://site.financialmodelingprep.com/developer/docs/) and then custom structured with a root node, then child nodes of the stock industry, then those have child nodes with each stock, and then those have child nodes with the stock information.
 
@@ -98,13 +96,23 @@ The chart shows the daily low, high, open, and close of a stock. Each â€œcandleâ
 
 ## Ticker Tape
 
+The dynamic ticker tape feature in Trader Radar showcases real-time stock information with color-coded indicators, where red signifies a decrease in stock value from the previous day, while green indicates an increase. Additionally, when users switch between market indexes, the ticker tape dynamically updates to display the relevant stocks for the selected index, continuously scrolling to the left and seamlessly looping around once it reaches the end, ensuring a seamless and comprehensive market overview.
+
 ![Ticker](./assets/ticker.gif)
 
 ## Market Clock
 
+The market clock feature in Trader Radar provides real-time information on market status, displaying a green color and counting down the time until market closure during trading hours, and switches to red when the market is closed. A few hours before the market opens, it shows the remaining number of hours until the market opens. The feature also accounts for all official market holidays and automatically defaults to New York City (NYC) time, ensuring accurate and synchronized market timings regardless of the user's location.
+
+![Clock Open](./assets/clock-green.gif)
+
+![Clock Closed](./assets/clock-red.gif)
+
+---------------------
 
 ## Wiki
 
+Please check out the repository's [wiki](https://github.com/chrisbanas/trader_radar/wiki) for more information and documentation.
 
 
 ---------------------
