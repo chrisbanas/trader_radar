@@ -12,8 +12,8 @@ Trader Radar is a visual and interactive representation of how various stocks or
 
 ## Technologies, Libraries, APIs
 
-- **JavaScript:** The core programming language used to create Trader Radar.
-- **HTML/CSS:** The markup and styling languages used to create the user interface of the heat map.
+- **Vanilla JavaScript:** Trader Radar is a single page app.
+- **HTML 5/CSS 3:** The markup and styling languages used to create the user interface of the heat map.
 - **Charting libraries:** Used for creating the stock heat map and candle stick chart from [D3](https://d3js.org/)
     - [D3 Treemap](https://observablehq.com/@d3/treemap)
     - [D3 Candle Stick Chart](https://observablehq.com/@d3/candlestick-chart)
@@ -34,6 +34,7 @@ Trader Radar is a visual and interactive representation of how various stocks or
 - **NPM:** to manage project dependencies.
 - **Bootstrap:** A front-end framework that provides a responsive grid system and UI components for building user interfaces.
 - **Google Domains** For custom domain management
+- **Hosting** Github Pages
 
 ---------------------
 
@@ -44,7 +45,7 @@ Trader Radar is a visual and interactive representation of how various stocks or
 
 ## Treemap
 
-The heat map is designed using a treemap algorithm which was first introduced by [Ben Shneiderman](https://www.cs.umd.edu/hcil/treemap-history/), in the 1990s. The treemap is then generated using the D3 charting library.
+The heat map is designed using a treemap algorithm which was first introduced by [Ben Shneiderman](https://www.cs.umd.edu/hcil/treemap-history/), in the 1990s. The treemap is then generated using the [D3 Treemap](https://observablehq.com/@d3/treemap) charting library.
 
 It allows users to filter and sort the data based market index, volume, average volumne, shares outstanding, and market cap, has a click to zoom which allows a drill down into the tiniest of cells, and a tooltip upon hovering for additional stock detail.
 
@@ -53,7 +54,7 @@ Each cell in the heat map is color-coded based on the stock's performance, with 
 ![Heat Map](./assets/heatmap.JPG)
 
 ### Treemap Data Structure
-The data for the treemap is structured with a root node, then child nodes of the stock industry, then those have child nodes with each stock, and then those have child nodes with the stock information.
+The data for the treemap is built by combining two API calls from [Financial Modeling Prep](https://site.financialmodelingprep.com/developer/docs/) and then custom structured with a root node, then child nodes of the stock industry, then those have child nodes with each stock, and then those have child nodes with the stock information.
 
 ```mathematica
 Root (Stock Index Data)
@@ -82,7 +83,7 @@ Root (Stock Index Data)
 
 ## Candle Stick Chart
 
-The chart shows the daily low, high, open, and close of a stock. Each “candle” represents a single trading day. A specialized x-axis is used to avoid gaps on the weekend when the markets are closed. The candlestick chart is generated using the D3 charting library.
+The chart shows the daily low, high, open, and close of a stock. Each “candle” represents a single trading day. A specialized x-axis is used to avoid gaps on the weekend when the markets are closed. The candlestick chart is generated using the [D3 Candle Stick Chart](https://observablehq.com/@d3/candlestick-chart) charting library.
 
 
 ![Candle Stick Chart](./assets/candle.jpg)
