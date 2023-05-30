@@ -15,8 +15,12 @@ export default async function updateTime() {
         timeZone: 'America/New_York',
     };
 
+    // Fetch current NYC time from the World Time API
+    let timeResponse = await fetch('https://worldtimeapi.org/api/timezone/America/New_York');
+    let currentTime = await timeResponse.json();
+    let dt = new Date(currentTime.datetime);
+
     // create a new date string
-    let dt = new Date();
     let dateTimeString = dt.toLocaleString('en-US', options);
     dateTimeString = dateTimeString.replace(/([A-Z]+) Standard Time$/, '$1');
 
@@ -51,7 +55,7 @@ export default async function updateTime() {
     }
 
     // sets the color to green on open and red on closed. Using NYC time
-    let nyTime = new Date().toLocaleString("en-US", { timeZone: "America/New_York" });
+    let nyTime = new Date(currentTime.datetime).toLocaleString("en-US", { timeZone: "America/New_York" });
     let nyHour = new Date(nyTime).getHours();
 
     if (!isMarketHoliday && nyHour >= 9 && nyHour < 16) {
