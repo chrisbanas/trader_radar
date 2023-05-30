@@ -40,7 +40,7 @@ async function getStockNews(tickers) {
         });;
 }
 
-// get historical price for chart. Timeseries is for how many days we want to return
+// get historical price for candlestick chart. Timeseries is for how many days we want to return
 async function getHistoricalPrice(tickers) {
     const timeRange = 180;
     const apiUrl = `https://financialmodelingprep.com/api/v3/historical-price-full/${tickers}?timeseries=${timeRange}&apikey=${apiKey}`;
@@ -74,7 +74,7 @@ clearButton.addEventListener('click', function () {
     clearButton.style.display = "none";
 });
 
-
+// MAIN FUNCTION THAT CONTROLS THE SEARCH
 export default async function startSearch() {
     searchButton.addEventListener("click", async function (searchHit) {
         searchHit.preventDefault();
@@ -115,12 +115,9 @@ async function mainSearch(searchHit) {
     // perform search and get company data
     const companyData = await performSearch(searchQuery);
 
-
-
     // perform search and get news data
     const news = await getStockNews(searchQuery);
     const limitedNews = news.slice(0, 5);
-
 
     // fetch chart data check to see if there is already a chart if so clear then redisplay
     const chartElement = document.getElementById("candle-chart")
@@ -136,6 +133,7 @@ async function mainSearch(searchHit) {
         chartElement.remove();
     }
 
+    // Draws the candlestick chart
     drawCandlestickChart(historicalPrice.historical)
 
     // clear out other elements on page
@@ -174,7 +172,7 @@ async function mainSearch(searchHit) {
 
     // style the company name
     const name = document.createElement("a");
-    name.style.fontSize = "20px";
+    name.style.fontSize = "40px";
     name.style.fontFamily = "'Roboto Slab', serif";
     name.style.fontWeight = "bold"
     name.style.marginRight = "2px";
@@ -211,6 +209,8 @@ async function mainSearch(searchHit) {
     // adding and appending the price html elements on the page
     price.textContent = "$" + companyData[0].price;
     price.classList.add("price");
+    price.style.padding = "10px"
+    price.style.paddingBottom = "20px"
 
 
     // add the up or down class based on price change
@@ -224,19 +224,16 @@ async function mainSearch(searchHit) {
     companyDataList.appendChild(listItem);
 
 
-
-
     // add news and style
     const newsList = document.createElement("ul");
     newsList.style.fontFamily = "'Roboto Slab', serif";
     newsList.style.fontWeight = "bold"
     newsList.style.display = "flex";
     newsList.style.alignItems = "center";
-    newsList.style.justifyContent = "space-around";
+    newsList.style.justifyContent = "space-between";
     newsList.style.fontSize = "15px";
-    newsList.style.padding = "20px";
-    newsList.style.paddingRight = "30px";
-    newsList.style.paddingLeft = "30px"
+    newsList.style.paddingRight = "100px";
+    newsList.style.paddingLeft = "100px"
 
 
     // how the news list items are mapped and added to the HTML of the page
@@ -245,7 +242,7 @@ async function mainSearch(searchHit) {
     for (const article of limitedNews) {
         const newsItem = document.createElement("li");
         newsItem.classList.add("news-item");
-
+        newsItem.style.paddingRight = "30px"
         const title = document.createElement("a");
         title.href = article.url;
         title.textContent = article.title;
@@ -298,8 +295,10 @@ async function mainSearch(searchHit) {
 
 // draw the chart
 function drawCandlestickChart(data) {
+
     // set the dimensions and margins of the graph
     const margin = { top: 65, right: 20, bottom: 90, left: 100 };
+
     // calculate the width and height based on window size
     // subtracting margin offsets to ensure the chart fits within the window
     const width = (window.innerWidth - margin.left - margin.right) * 0.9;
@@ -318,7 +317,10 @@ function drawCandlestickChart(data) {
         .attr("id", "candle-chart") // Add the id attribute
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
-        .style("background-color", "#f5f5f5")
+        .style("background-color", "#1b1d20")
+        .style("border-radius", "10px")
+        .style("color", "white")
+        .style("font-family", "Roboto Slab, serif")
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -326,6 +328,7 @@ function drawCandlestickChart(data) {
     svg
         .append("g")
         .attr("class", "grid")
+        .style("color", "white")
         .call(
             d3
                 .axisLeft(y)
@@ -338,6 +341,7 @@ function drawCandlestickChart(data) {
         .append("g")
         .attr("class", "grid")
         .attr("transform", "translate(0," + height + ")")
+        .style("color", "white")
         .call(
             d3
                 .axisBottom(x)
@@ -356,8 +360,6 @@ function drawCandlestickChart(data) {
         stock.close = +stock.close;
     });
 
-    console.log(data.slice(150, 180));  // log the first 30 entries
-
     // reverse the order of the data array so it charts oldest on x0 and newest on x1
     data.reverse();
 
@@ -369,12 +371,13 @@ function drawCandlestickChart(data) {
     );
     y.domain([
         d3.min(data, function (stock) {
-            return stock.low;
+            return Math.min(stock.low, stock.open, stock.close);
         }),
         d3.max(data, function (stock) {
-            return stock.high;
+            return Math.max(stock.high, stock.open, stock.close);
         }),
     ]);
+
 
     // draw the custom x axis with labels for every 30 days
     svg
@@ -385,27 +388,30 @@ function drawCandlestickChart(data) {
                 .axisBottom(x)
                 .tickValues(
                     x.domain().filter(function (date, day) {
-                        return day % 30 === 0;
+                        return day % 15 === 0;
                     })
                 )
         )
         .selectAll("text")
-        .attr("transform", "rotate(-90)")
-        .attr("x", -9)
-        .attr("y", 0)
-        .style("text-anchor", "end")
+        .attr("transform", "rotate(0)")
+        .attr("x", 12)
+        .attr("y", 10)
+        .style("color", "white")
+        .style("text-anchor", "end");
 
     // draw the x-axis label
     svg
         .append("text")
         .attr("class", "x-axis-label")
         .attr("x", width / 2)
-        .attr("y", height + margin.bottom / 2)
+        .attr("y", height + margin.bottom / 2 + 15)
         .style("text-anchor", "middle")
+        .style("font-size", "14px")
+        .style("fill", "white")
         .text("Date");
 
     // draw the y axis
-    svg.append("g").call(d3.axisLeft(y));
+    svg.append("g").call(d3.axisLeft(y)).style("color", "white");
 
     // draw the y-axis label
     svg
@@ -415,9 +421,12 @@ function drawCandlestickChart(data) {
         .attr("y", -margin.left / 2)
         .attr("transform", "rotate(-90)")
         .style("text-anchor", "middle")
+        .style("font-size", "14px")
+        .style("fill", "white")
         .text("Price");
 
-    // draw the candlesticks
+
+    // draw the candlesticks with rounded corners
     svg.selectAll("rect")
         .data(data)
         .enter()
@@ -432,15 +441,18 @@ function drawCandlestickChart(data) {
         .attr("height", function (stock) {
             return y(Math.min(stock.open, stock.close)) - y(Math.max(stock.open, stock.close));
         })
+        .attr("rx", 5) // set the corner radius
+        .attr("ry", 5) // set the corner radius
         .attr("fill", function (stock) {
             return stock.open > stock.close ? "red" : "green";
         });
 
     // Add lines for the wicks
-    svg.selectAll("line")
+    svg.selectAll(".wick-line") // Use a class selector to target the desired lines
         .data(data)
         .enter()
         .append("line")
+        .attr("class", "wick-line") // Assign the same class to the appended lines
         .attr("x1", function (stock) {
             return x(stock.date) + x.bandwidth() / 2;
         })
@@ -453,18 +465,17 @@ function drawCandlestickChart(data) {
         .attr("y2", function (stock) {
             return y(stock.low);
         })
-        .attr("stroke", "black");
-
+        .attr("stroke", "white");
 
     // add chart title
     svg
         .append("text")
         .attr("class", "chart-subtitle")
         .attr("x", width / 2)
-        .attr("y", -margin.top / 2 + 25)
+        .attr("y", -margin.top / 2 + 10)
         .style("text-anchor", "middle")
-        .style("font-size", "16px")
+        .style("font-size", "18px")
+        .style("fill", "white")
         .text("180 Day Stock Prices");
-
 
 }

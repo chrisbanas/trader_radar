@@ -182,8 +182,20 @@ let drawTreeMap = (stockData, size) => {
       d3.select(this).attr('data-eps', stock['data']['eps'].toFixed(2));
       d3.select(this).attr('data-pe', stock['data']['pe'].toFixed(2));
 
+      // Used in the hover popup to set its position
+
+      // Calculate the halfway point of the canvas
+      const xHalfway = d3.select('#treemapcanvas').node().clientWidth / 2;
+
+      // Save the original transform of the group element. Used in the popup
+      const originalTransform = d3.select(this).attr('transform');
+      d3.select(this).attr('data-original-transform', originalTransform);
+
+      // Check if the tile's x-coordinate is past the midpoint of the canvas
+      const xMidpoint = (stock['x0'] + stock['x1']) / 2;
+
       // Set the position of the popup
-      const x0 = stock['x0'] + 50;
+      const x0 = xMidpoint >= xHalfway ? stock['x0'] - 200 : stock['x0'] + 100;
       const y0 = stock['y0'] + 10;
       const x1 = stock['x1'] + 40;
       const y1 = stock['y1'] + 100;
@@ -193,10 +205,23 @@ let drawTreeMap = (stockData, size) => {
       d3.select(this).attr('data-x1', x1);
       d3.select(this).attr('data-y1', y1);
 
+      // Used in the click zoom to standardize the scaling factor of the tile
+
       // Calculate the scaling factor based on the area of the tile. This is used in the click/zoom
+
+      // Get the width and height of the canvas
+      let canvasWidth = d3.select('#treemapcanvas').node().clientWidth;
+      let canvasHeight = d3.select('#treemapcanvas').node().clientHeight;
+
+      // Calculate the area of the canvas
+      let canvasArea = canvasWidth * canvasHeight;
+
+      // Calculate the scaling factor based on the area of the tile and the canvas area
       let area = (stock['x1'] - stock['x0']) * (stock['y1'] - stock['y0']);
-      let scale = Math.sqrt(160000 / area);
+      let scale = Math.sqrt((canvasArea / area) / 16); // the 16 is just a random guess, the prior calc had 16000 and I just kept taking off 0's till it looked good.
+
       d3.select(this).attr('data-scale', scale);
+
     })
 
 

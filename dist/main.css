@@ -34,6 +34,7 @@ footer, header, hgroup, menu, nav, section {
 
 body {
   line-height: 1;
+  overflow: hidden; /* I added this to prevent the scrollbar from showing*/
 }
 
 ol, ul {
@@ -371,12 +372,8 @@ form {
   margin-bottom: 20px;
 }
 
-.news-list {
-  display: flex;
-}
-
-.x-axis-label {
-  padding-top: 50px;
+.logo-and-name {
+  height: auto;
 }
 
 .no-results {
@@ -479,7 +476,7 @@ svg {
 
 #treemapcanvas {
   width: calc(100vw - 4%);
-  height: calc(100vh - 440px);
+  height: calc(100vh - 400px);
   background-color: #1b1d20;
   border-radius: 10px;
 }
@@ -559,10 +556,6 @@ form {
   margin-bottom: 20px;
 }
 
-.news-list {
-  display: flex;
-}
-
-.x-axis-label {
-  padding-top: 50px;
+.logo-and-name {
+  height: auto;
 }
