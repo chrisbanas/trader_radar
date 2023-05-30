@@ -4,11 +4,33 @@
 
 Trader Radar is a visual and interactive representation of how various stocks or financial instruments are performing in the market. It combines a stock heatmap, a stock search function, a candlestick chart, live market clock, and stock ticker tape to provide valuable insights and aid in decision-making.
 
- ![Home Page](./assets/trader_radar_home.JPG)
+[Live Website](https://www.traderradar.net/)
+
+ ![Home Page](./assets/trader-radar.jpg)
 
 ---------------------
 
-# Technologies, Libraries, APIs
+# Technologies
+
+| **Technology**             | **Use**                   |
+|----------------------------|---------------------------|
+| Vanilla JavaScript         | Core functionality        |
+| JavaScript Vanilla DOM API | DOM event handling        |
+| NPM                        | Dependency management     |
+| Bootstrap                  | Front-end framework       |
+| Webpack                    | Bundle and transpile code |
+| Babel                      | Bundle and transpile code |
+| HTML5                      | Structuring               |
+| CSS 3                      | Styling                   |
+| Font Awesome               | Social Icons              |
+| Google Fonts               | Typography                |
+| Google Domains             | Custom domain             |
+| GitHub Pages               | Hosting platform          |
+|                            |                           |
+
+---------------------
+
+# APIs & Libraries
 
 ## **Financial Data APIs**
 
@@ -25,14 +47,6 @@ Trader Radar is a visual and interactive representation of how various stocks or
 | [Historical Stock Data](https://site.financialmodelingprep.com/developer/docs/historical-stock-data-free-api/#Historical-Daily-Prices)       | Search      | Provides access to historical prices that can be used to create charts.                                                            |
 |                             |             |                                                                                                                                    |
 
-## **Charting libraries**
-
-| **Chart**         | **Library**                                          | **Feature**       | **Info**                                                                                                                                                                                                                    |
-|-------------------|------------------------------------------------------|-------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Treemap           | [D3](https://observablehq.com/@d3/treemap)           | Heatmap           | A treemap chart visually represents hierarchical data using nested rectangles, where the size and color of each rectangle correspond to different data attributes.                                                          |
-| Candlestick | [D3](https://observablehq.com/@d3/candlestick-chart) | Candlestick Chart | A candlestick chart displays the opening, closing, high, and low prices of a financial instrument within a specified time period, using rectangular "candles" with upper and lower "wicks" to represent price fluctuations. |
-|                   |                                                      |                   |                                                                                                                                                                                                                             |
-
 
 ## **Time & Calendar APIs**
 
@@ -41,6 +55,15 @@ Trader Radar is a visual and interactive representation of how various stocks or
 | Public Holidays | [Nager](https://date.nager.at/Api)                                   | Market Clock | For displaying market closed on holidays when the stock market is not open |
 | NYC Time        | [World Time](https://worldtimeapi.org/api/timezone/America/New_York) | Market Clock | For pulling accurate live time data for New York City                           |
 |                 |                                                                      |              |                                                                            |
+
+
+## **Charting Libraries**
+
+| **Chart**         | **Library**                                          | **Feature**       | **Info**                                                                                                                                                                                                                    |
+|-------------------|------------------------------------------------------|-------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Treemap           | [D3](https://observablehq.com/@d3/treemap)           | Heatmap           | A treemap chart visually represents hierarchical data using nested rectangles, where the size and color of each rectangle correspond to different data attributes.                                                          |
+| Candlestick | [D3](https://observablehq.com/@d3/candlestick-chart) | Candlestick Chart | A candlestick chart displays the opening, closing, high, and low prices of a financial instrument within a specified time period, using rectangular "candles" with upper and lower "wicks" to represent price fluctuations. |
+|                   |                                                      |                   |                                                                                                                                                                                                                             |
 
 ---------------------
 
@@ -57,7 +80,7 @@ It allows users to filter and sort the data based market index, volume, average 
 
 Each cell in the heatmap is color-coded based on the stock's performance, with different shades of color representing different levels of performance, and the stocks grouped by industry.
 
-![Heatmap](./assets/heatmap.JPG)
+![Heatmap](./assets/treemap.gif)
 
 ## Heatmap Data Structure
 
@@ -96,6 +119,10 @@ The chart shows the daily low, high, open, and close of a stock. Each â€œcandleâ
 ![Candle Stick Chart](./assets/candle.jpg)
 
 ## Stock Search
+
+The search function in Trader Radar allows users to enter any stock ticker and instantly access live prices and news updates about the company, while also providing a comprehensive candlestick chart displaying 180 days of historical prices. With robust error handling features, the system ensures a seamless user experience by effectively handling and communicating any issues that may arise during the search process.
+
+![Search](./assets/search.gif)
 
 ## Ticker Tape
 
