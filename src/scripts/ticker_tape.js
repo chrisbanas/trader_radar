@@ -61,7 +61,7 @@ async function updateStockTicker(indexValue) {
         ticker.appendChild(p);
     });
 
-    // Scroll the ticker to the left
+    // Scroll the ticker to the left and loop scroll. Right now it just blinks and resets
     let scrollAmount = 0;
     const scrollSpeed = 2; // adjust scroll speed
     const scrollInterval = 100; // adjust scroll interval

@@ -208,9 +208,20 @@ let drawTreeMap = (stockData, size) => {
       // Used in the click zoom to standardize the scaling factor of the tile
 
       // Calculate the scaling factor based on the area of the tile. This is used in the click/zoom
+
+      // Get the width and height of the canvas
+      let canvasWidth = d3.select('#treemapcanvas').node().clientWidth;
+      let canvasHeight = d3.select('#treemapcanvas').node().clientHeight;
+
+      // Calculate the area of the canvas
+      let canvasArea = canvasWidth * canvasHeight;
+
+      // Calculate the scaling factor based on the area of the tile and the canvas area
       let area = (stock['x1'] - stock['x0']) * (stock['y1'] - stock['y0']);
-      let scale = Math.sqrt(160000 / area);
+      let scale = Math.sqrt((canvasArea / area) / 16); // the 16 is just a random guess, the prior calc had 16000 and I just kept taking off 0's till it looked good.
+
       d3.select(this).attr('data-scale', scale);
+
     })
 
 
