@@ -70,6 +70,7 @@ h1#title {
   font-size: 65px;
   font-family: "Roboto Slab", serif;
   margin-left: 15px;
+  cursor: pointer;
 }
 
 header li p {

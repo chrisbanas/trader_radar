@@ -3,6 +3,7 @@ const form = document.querySelector('form');
 const input = document.querySelector('#input');
 const clearButton = document.querySelector('#clear-button');
 const searchButton = document.getElementById("search");
+const title = document.getElementById('title')
 
 // ------------------------------------------------------------------------------------------------------
 
@@ -73,6 +74,19 @@ clearButton.addEventListener('click', function () {
     // remove the button from treemap display
     clearButton.style.display = "none";
 });
+
+// This makes the tradar radar title act the same as the clear button
+title.addEventListener('click', function () {
+        input.value = ''; // Clear the input value
+        // clear out the search
+        document.getElementById("search-results").style.display = "none";
+        document.getElementById("candle-chart").style.display = "none";
+        // redisplay the treemap
+        document.getElementById("filters").style.display = "flex";
+        document.getElementById("description").style.display = "flex";
+        document.getElementById("treemapcanvas").style.display = "flex";
+});
+
 
 // MAIN FUNCTION THAT CONTROLS THE SEARCH
 export default async function startSearch() {
